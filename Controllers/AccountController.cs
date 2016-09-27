@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +6,11 @@ using Microsoft.Extensions.Logging;
 using Straight_Line.Models;
 using Straight_Line.Models.AccountViewModels;
 using Straight_Line.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Straight_Line.Controllers
 {
@@ -105,7 +105,7 @@ namespace Straight_Line.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -405,6 +405,16 @@ namespace Straight_Line.Controllers
         }
 
         //
+        // POST: /Account/Git
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Git()
+        {
+
+            return Ok();
+        }
+
+        //
         // POST: /Account/VerifyCode
         [HttpPost]
         [AllowAnonymous]
@@ -463,6 +473,6 @@ namespace Straight_Line.Controllers
             }
         }
 
-        #endregion
+        #endregion Helpers
     }
 }
