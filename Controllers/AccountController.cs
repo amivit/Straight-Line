@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Straight_Line.Models;
 using Straight_Line.Models.AccountViewModels;
 using Straight_Line.Services;
@@ -408,10 +410,17 @@ namespace Straight_Line.Controllers
         // POST: /Account/Git
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Git()
+        public async Task<IActionResult> Git([FromBody]dynamic data)
         {
-
-            return Ok();
+            try
+            {
+                var testJsonResult = JsonConvert.DeserializeObject(data.ToString());
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         //
