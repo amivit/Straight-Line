@@ -4,7 +4,7 @@ configuration:
 #- Release
 platform: Any CPU
 environment:
-  # Don't report back to the mothership
+  # Don't report back to the mothership!
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 branches:
   only:
