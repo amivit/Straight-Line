@@ -12,6 +12,7 @@ branches:
 init:
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 before_build:
+- ps: Install-Package -g Bower
 - appveyor-retry dotnet restore -v Minimal
 build_script:
 - dotnet build -c Release --no-dependencies
