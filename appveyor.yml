@@ -1,7 +1,7 @@
 ﻿version: 1.0.{build}
 configuration:
 - Debug
-- Release
+#- Release
 platform: Any CPU
 environment:
   # Don't report back to the mothership
@@ -19,16 +19,9 @@ after_build:
   #project: Straight-Line.xproj
   #verbosity: minimal
 deploy:
-- provider: S3
+- provider: Environment
   aspnet_core_force_restart: true
-  access_key_id: AKIAIY2ZMB6G7OJY5B3Q
-  secret_access_key:
-    secure: vuy+rfshYn99da+ZunmZn95XvpAeMFawPduxXtC0OruwPRyZPWEQDt3c8qMDtAZt
-  region: eu-west-1
-  bucket: codedeploy-poulw
-  folder: master
-  set_public: false
-  encrypt: false
+  name: CodeDeploy
   on:
     branch: master
 notifications:
