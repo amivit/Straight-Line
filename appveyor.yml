@@ -22,7 +22,7 @@ before_deploy:
 after_deploy:
 - ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
 artifacts:
-  - path: bin\Release\netcoreapp1.0
+  - path: bin\Release\netcoreapp1.0\publish
 deploy:
 - provider: Environment
   name: CodeDeploy
