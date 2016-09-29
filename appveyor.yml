@@ -19,7 +19,6 @@ build_script:
 after_build:
 - dotnet publish -c Release -r ubuntu.14.04-x64
 before_deploy:
-- ps: dotnet publish -c release -r ubuntu.14.04-x64
 after_deploy:
 - ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
 artifacts:
@@ -29,7 +28,6 @@ deploy:
   name: CodeDeploy
   on:
     branch: master
-
 
 notifications:
 - provider: Webhook
