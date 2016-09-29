@@ -34,7 +34,7 @@ deploy:
     secure: UJSO1WCJWmaeCFcMAyz8mbicEpHQq2/hrFM0tNVnfb4zNwVCpgYwaOjDbYlqUzQF
   region: eu-west-1
   bucket: new-bucket-25290414
-  artifact: "mvc-$(APPVEYOR_REPO_COMMIT).tar.gz"
+  artifact: bin
   encrypt: true
   on:
     branch: master
