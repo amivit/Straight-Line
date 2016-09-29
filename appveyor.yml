@@ -17,8 +17,8 @@ before_build:
 build_script:
 - dotnet build -c Release --no-dependencies
 after_build:
-- dotnet publish -c Release -r ubuntu.14.04-x64
 before_deploy:
+- dotnet publish -c Release -r ubuntu.14.04-x64
 after_deploy:
 - ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
 artifacts:
