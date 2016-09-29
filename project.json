@@ -1,4 +1,8 @@
 {
+  "runtimes": {
+    "win10-x64": {},
+    "ubuntu.14.04-x64": {}
+  },
   "userSecretsId": "aspnet-Straight_Line-a553b06a-6dfa-4444-bbd5-b77190ff0101",
 
   "dependencies": {

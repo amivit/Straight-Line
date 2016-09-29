@@ -16,30 +16,20 @@ before_build:
 build_script:
 - dotnet build -c Release --no-dependencies
 after_build:
-- dotnet pack -c Release --no-build
+- dotnet publish -c Release -r ubuntu.14.04-x64
+before_deploy:
+- ps: dotnet publish -c release -r ubuntu.14.04-x64
+after_deploy:
+- ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
 artifacts:
-  - path: bin\Release
-#build:
-  #project: Straight-Line.xproj
-  #verbosity: minimal
-#deploy:
-#- provider: Environment
-  #aspnet_core_force_restart: true
-  #name: CodeDeploy
-  #on:
-    #branch: master
+  - path: bin\Release\netcoreapp1.0
 deploy:
-- provider: S3
-  aspnet_core_force_restart: true
-  access_key_id: AKIAILYVH5BOGV3E6HVQ
-  secret_access_key:
-    secure: UJSO1WCJWmaeCFcMAyz8mbicEpHQq2/hrFM0tNVnfb4zNwVCpgYwaOjDbYlqUzQF
-  region: eu-west-1
-  bucket: new-bucket-25290414
-  artifact:
-  encrypt: true
+- provider: Environment
+  name: CodeDeploy
   on:
     branch: master
+
+
 notifications:
 - provider: Webhook
   url: http://mvc.tech-flex.com/api/appveyor
