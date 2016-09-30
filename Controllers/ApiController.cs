@@ -23,7 +23,7 @@ namespace StraightLine.Controllers
             psi.FileName = "/usr/bin/nohup";
             psi.UseShellExecute = true;
             psi.RedirectStandardOutput = true;
-            psi.Arguments = "/bin/bash -c /home/ubuntu/mvc-run/update.sh &";
+            psi.Arguments = @"/bin/bash -c /home/ubuntu/mvc-run/update.sh &";
             Process.Start(psi);
             return Ok();
         }
