@@ -20,10 +20,10 @@ namespace StraightLine.Controllers
         public IActionResult GitPullUpdateServer([FromBody]dynamic data)
         {
             ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = "/usr/bin/sudo";
+            psi.FileName = "/usr/bin/nohup";
             psi.UseShellExecute = true;
             psi.RedirectStandardOutput = false;
-            psi.Arguments = @"service supervisor restart";
+            psi.Arguments = @"/usr/bin/sudo service supervisor restart &";
             Process.Start(psi);
             return Ok();
         }
