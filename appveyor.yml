@@ -18,7 +18,7 @@ build_script:
 - dotnet build -c Release --no-dependencies --version-suffix %LABEL%
 after_build:
 - dotnet publish -c Release -r ubuntu.14.04-x64 --version-suffix %LABEL% -o bin\publish
-artifacts:
+#artifacts:
   # Breaking project deliberately to demonstrate forever hanging on appveyor
   #- path: bin\publish 
 deploy:
