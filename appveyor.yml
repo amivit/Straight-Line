@@ -3,8 +3,7 @@ configuration:
 - Debug
 #- Release
 platform: Any CPU
-environment:
-  # Don't report back to the mothership!
+environment:  
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 branches:
   only:
@@ -21,11 +20,6 @@ after_build:
 - dotnet publish -c Release -r ubuntu.14.04-x64 --version-suffix %LABEL% -o bin\publish
 artifacts:
   - path: bin\publish
-#deploy:
-#- provider: Environment
-  #name: CodeDeploy
-  #on:
-    #branch: master
 deploy:
 - provider: S3
   access_key_id: AKIAILYVH5BOGV3E6HVQ
@@ -40,16 +34,4 @@ deploy:
     branch: master
 before_deploy:
 after_deploy:
-- ps: Invoke-WebRequest -Uri http://mvc.tech-flex.com/Api/GitPull -Method POST
-notifications:
-- provider: Webhook
-  url: http://mvc.tech-flex.com/Api/GitPull
-  method: POST
-  headers:
-    header: 
-	  secure: a0bI1NPdI8hUFGWSxf91OqM+8z868A8LO7aGNtp+MYo=
-  on_build_success: true
-  on_build_failure: false
-  on_build_status_changed: false
-cache:
-- '%USERPROFILE%\.nuget\packages'
+- ps: Invoke-WebRequest -UseBasicParsing http://mvc.tech-flex.com/Api/GitPull -ContentType "application/json" -Method POST -Body "{ 'key':'0981j2d982uf918h2f981h2f98h' }"
