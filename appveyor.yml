@@ -10,25 +10,25 @@ branches:
   only:
   - master
 init:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+- ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 before_build:
 - npm install -g bower
 - appveyor-retry dotnet restore -v Minimal
 build_script:
-- dotnet build -c Release --no-dependencies
+- dotnet build -c Release --no-dependencies --version-suffix %LABEL%
 after_build:
-- dotnet publish -c Release -r ubuntu.14.04-x64
+- dotnet publish -c Release -r ubuntu.14.04-x64 --version-suffix %LABEL% -o artifacts\mvc
 before_deploy:
 after_deploy:
 - ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
 artifacts:
-  - path: bin\Release\netcoreapp1.0\publish
+  - path: artifacts\mvc\*.*
 deploy:
 - provider: Environment
   name: CodeDeploy
   on:
     branch: master
-
 notifications:
 - provider: Webhook
   url: http://mvc.tech-flex.com/api/appveyor
