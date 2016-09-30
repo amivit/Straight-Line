@@ -21,9 +21,9 @@ namespace StraightLine.Controllers
         {
             ProcessStartInfo psi = new ProcessStartInfo();
             psi.FileName = "/usr/bin/nohup";
-            psi.UseShellExecute = false;
-            psi.RedirectStandardOutput = false;
-            psi.Arguments = "/bin/bash -c /home/ubuntu/mvc-run/update.sh";
+            psi.UseShellExecute = true;
+            psi.RedirectStandardOutput = true;
+            psi.Arguments = "/bin/bash -c /home/ubuntu/mvc-run/update.sh &";
             Process.Start(psi);
             return Ok();
         }
