@@ -1,11 +1,11 @@
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Straight_Line.Data.Migrations
+namespace StraightLine.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

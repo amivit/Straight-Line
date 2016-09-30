@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using StraightLine.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Straight_Line.Models;
 
-namespace Straight_Line.Data
+namespace StraightLine.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

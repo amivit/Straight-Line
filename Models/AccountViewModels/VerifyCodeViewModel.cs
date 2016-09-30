@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Straight_Line.Models.AccountViewModels
+namespace StraightLine.Models.AccountViewModels
 {
     public class VerifyCodeViewModel
     {

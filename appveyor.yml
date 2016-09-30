@@ -40,11 +40,14 @@ deploy:
     branch: master
 before_deploy:
 after_deploy:
-- ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
+- ps: Invoke-WebRequest -Uri http://mvc.tech-flex.com/Api/GitPull -Method POST
 notifications:
 - provider: Webhook
-  url: http://mvc.tech-flex.com/api/appveyor
+  url: http://mvc.tech-flex.com/Api/GitPull
   method: POST
+  headers:
+    header: 
+	  secure: a0bI1NPdI8hUFGWSxf91OqM+8z868A8LO7aGNtp+MYo=
   on_build_success: true
   on_build_failure: false
   on_build_status_changed: false

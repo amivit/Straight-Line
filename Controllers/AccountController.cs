@@ -5,16 +5,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Straight_Line.Models;
-using Straight_Line.Models.AccountViewModels;
-using Straight_Line.Services;
+using StraightLine.Models;
+using StraightLine.Models.AccountViewModels;
+using StraightLine.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Straight_Line.Controllers
+namespace StraightLine.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -404,23 +404,6 @@ namespace Straight_Line.Controllers
                 return View("Error");
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
-
-        //
-        // POST: /Account/Git
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Git([FromBody]dynamic data)
-        {
-            try
-            {
-                var testJsonResult = JsonConvert.DeserializeObject(data.ToString());
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
         }
 
         //

@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
-namespace Straight_Line.Controllers
+namespace StraightLine.Controllers
 {
     public class HomeController : Controller
     {

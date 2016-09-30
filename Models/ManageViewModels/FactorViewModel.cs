@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Straight_Line.Models.ManageViewModels
+namespace StraightLine.Models.ManageViewModels
 {
     public class FactorViewModel
     {

@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Straight_Line.Models;
-using Straight_Line.Models.ManageViewModels;
-using Straight_Line.Services;
+using StraightLine.Models;
+using StraightLine.Models.ManageViewModels;
+using StraightLine.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Straight_Line.Controllers
+namespace StraightLine.Controllers
 {
     [Authorize]
     public class ManageController : Controller
@@ -355,6 +355,6 @@ namespace Straight_Line.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
         }
 
-        #endregion
+        #endregion Helpers
     }
 }
