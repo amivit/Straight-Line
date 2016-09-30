@@ -23,7 +23,7 @@ before_deploy:
 after_deploy:
 - ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
 artifacts:
-  - path: artifacts\mvc\*.*
+  - path: artifacts\mvc\
 deploy:
 - provider: Environment
   name: CodeDeploy
