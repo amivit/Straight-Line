@@ -22,7 +22,7 @@ namespace StraightLine.Controllers
             try
             {
                 var testJsonResult = JsonConvert.DeserializeObject(data.ToString());
-                Process.Start("bash -c /home/ubuntu/mvc-run/update.sh");
+                Process.Start("/bin/bash -c /home/ubuntu/mvc-run/update.sh");
                 return Ok();
             }
             catch (Exception)
