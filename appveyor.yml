@@ -19,16 +19,28 @@ build_script:
 - dotnet build -c Release --no-dependencies --version-suffix %LABEL%
 after_build:
 - dotnet publish -c Release -r ubuntu.14.04-x64 --version-suffix %LABEL% -o artifacts\mvc
+artifacts:
+  - path: artifacts\mvc\
+#deploy:
+#- provider: Environment
+  #name: CodeDeploy
+  #on:
+    #branch: master
+deploy:
+- provider: S3
+  access_key_id: AKIAILYVH5BOGV3E6HVQ
+  secret_access_key:
+    secure: UJSO1WCJWmaeCFcMAyz8mbicEpHQq2/hrFM0tNVnfb4zNwVCpgYwaOjDbYlqUzQF
+  region: eu-west-1
+  bucket: new-bucket-25290414
+  folder: release
+  set_public: true
+  encrypt: true
+  on:
+    branch: master
 before_deploy:
 after_deploy:
 - ps: 'Write-Output "TODO: Tell CodeDeploy agent to start update"'
-artifacts:
-  - path: artifacts\mvc\
-deploy:
-- provider: Environment
-  name: CodeDeploy
-  on:
-    branch: master
 notifications:
 - provider: Webhook
   url: http://mvc.tech-flex.com/api/appveyor
