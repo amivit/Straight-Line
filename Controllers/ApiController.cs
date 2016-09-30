@@ -20,10 +20,10 @@ namespace StraightLine.Controllers
         public IActionResult GitPullUpdateServer([FromBody]dynamic data)
         {
             ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = "/bin/bash";
+            psi.FileName = "/usr/bin/nohup";
             psi.UseShellExecute = false;
             psi.RedirectStandardOutput = false;
-            psi.Arguments = "-c \"/home/ubuntu/mvc-run/update.sh &\"";
+            psi.Arguments = "/bin/bash -c /home/ubuntu/mvc-run/update.sh";
             Process.Start(psi);
             return Ok();
         }
