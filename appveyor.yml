@@ -18,9 +18,9 @@ before_build:
 build_script:
 - dotnet build -c Release --no-dependencies --version-suffix %LABEL%
 after_build:
-- dotnet publish -c Release -r ubuntu.14.04-x64 --version-suffix %LABEL% -o artifacts\mvc
+- dotnet publish -c Release -r ubuntu.14.04-x64 --version-suffix %LABEL% -o bin\publish
 artifacts:
-  - path: artifacts\mvc\
+  - path: bin\publish
 #deploy:
 #- provider: Environment
   #name: CodeDeploy
