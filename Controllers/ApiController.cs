@@ -23,7 +23,7 @@ namespace StraightLine.Controllers
             psi.FileName = "/usr/bin/nohup";
             psi.UseShellExecute = true;
             psi.RedirectStandardOutput = false;
-            psi.Arguments = @"/usr/bin/sudo service supervisor restart &";
+            psi.Arguments = @"/usr/bin/sudo service supervisor restart &"; // DO NOT TOUCH. It works perfectly like this.
             Process.Start(psi);
             return Ok();
         }
