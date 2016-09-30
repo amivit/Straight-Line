@@ -23,7 +23,7 @@ namespace StraightLine.Controllers
             psi.FileName = "/usr/bin/sudo";
             psi.UseShellExecute = true;
             psi.RedirectStandardOutput = false;
-            psi.Arguments = @"sh /home/ubuntu/mvc-run/update.sh &";
+            psi.Arguments = @"service supervisor restart";
             Process.Start(psi);
             return Ok();
         }
