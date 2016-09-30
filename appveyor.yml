@@ -34,4 +34,4 @@ deploy:
     branch: master
 before_deploy:
 after_deploy:
-- ps: Invoke-WebRequest -UseBasicParsing http://mvc.tech-flex.com/Api/GitPull -ContentType "application/json" -Method POST -Body "{ 'key':'0981j2d982uf918h2f981h2f98h' }"
+- ps: Invoke-WebRequest -UseBasicParsing http://mvc.tech-flex.com/Api/GitPullUpdateServer -ContentType "application/json" -Method POST -Body "{ 'key':'0981j2d982uf918h2f981h2f98h' }"

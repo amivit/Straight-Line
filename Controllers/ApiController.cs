@@ -14,7 +14,7 @@ namespace StraightLine.Controllers
         // POST: /Api/Git
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult GitPull([FromBody]dynamic data)
+        public IActionResult GitPullUpdateServer([FromBody]dynamic data)
         {
             try
             {
