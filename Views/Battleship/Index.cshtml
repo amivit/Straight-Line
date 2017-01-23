@@ -5,6 +5,8 @@
 <h2>Battleship Index</h2>
 
 <script>
+    
+
     var gameState;
     //$(document).ready(function() {
     //    $.ajax({
@@ -13,16 +15,16 @@
     //        gameState = data;
     //    });
     //});
+    console.log();
+    var data;
+    alert("TEST1");
 
-    $.ajax({
-        dataType: "json",
-        url: api / Load,
-        data: data,
-        success: success
-    });
+    $(document).ready($.getJSON("/api/Load", function (data) {
+        alert(data.player1.board.tiles[0].id);
+    }));
 
-    alert(data);
-
+    
+    alert("TEST2");
 
 
 </script>
