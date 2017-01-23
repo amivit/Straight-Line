@@ -33,5 +33,14 @@ namespace StraightLine.Controllers.Battleship
         {
             return Ok();
         }
+
+        [Route("api/Load")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Load()
+        {
+            var gamestate = new GameState();
+            return Ok(gamestate);
+        }
     }
 }

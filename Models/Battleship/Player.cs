@@ -7,6 +7,11 @@ namespace StraightLine.Models.Battleship
 {
     public class Player
     {
+        public Player()
+        {
+            this.Board = new Board();
+        }
+
         public Board Board { get; set; }
     }
 }
