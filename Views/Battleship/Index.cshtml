@@ -3,40 +3,43 @@
 }
 
 <h2>Battleship Index</h2>
-<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #d3d3d3;"></canvas>
+<canvas id="myCanvas" width="1000" height="1000" tabindex="0" style="border: 1px solid #d3d3d3;"></canvas>
 
 <script>
-
     var elem = document.getElementById('myCanvas'),
     elemLeft = elem.offsetLeft,
     elemTop = elem.offsetTop,
-    context = elem.getContext('2d'),
-    elements = [];
+    context = elem.getContext('2d')
+
+    $(document).ready($.getJSON("/api/Load", function (data) {
+        $.each(data.player1.board.tiles, function (index, element) {
+            context.fillStyle = 'grey'
+            context.rect(element.x, element.y, 50, 50);
+            context.stroke();
+        });
+
+        
+        $(document).ready($.getJSON("/api/Load", function (data) {
+            $.each(data.player1.board.ships, function (index, item) {
+                context.fillStyle = 'grey'
+                context.fillRect(100 * index + 50, 600, 50, item.lenght * 50);
+                context.stroke();
+            })}));
+
+        // Add event listener for `click` events.
+        elem.addEventListener('click', function (event) {
+            var x = event.pageX - elemLeft,
+                y = event.pageY - elemTop;
+
+            // Collision detection between clicked offset and element.
+            $.each(data.player1.board.tiles, function (index, element) {
+                if (y > element.y && y < element.y + 50
+                    && x > element.x && x < element.x + 50) {
+                    alert(element.id);
+                }
+            });
+        }, false);
 
 
- $(document).ready($.getJSON("/api/Load", function (data) {
-        //alert(data.player1.board.tiles[0].id);
-     $.each(data.player1.board.tiles, function (index, element) {
-         context.fillStyle = 'grey'
-         context.fillRect(element.x, element.y, 100, 100);
-     });
-
-
-     // Add event listener for `click` events.
-     elem.addEventListener('click', function (event) {
-         var x = event.pageX - elemLeft,
-             y = event.pageY - elemTop;
-
-         // Collision detection between clicked offset and element.
-         $.each(data.player1.board.tiles, function (index, element) {
-             if (y > element.x && y < element.x + 100
-                 && x > element.y && x < element.y + 100) {
-                 alert('clicked an element');
-             }
-         });
-
-     }, false);
-        }));
-
+    }));
 </script>
-
