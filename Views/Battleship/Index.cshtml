@@ -3,6 +3,8 @@
 }
 
 <h2>Battleship Index</h2>
+<input type="radio" name="number">Horizontal
+<input type="radio" name="number">Vertical
 <canvas id="myCanvas" width="1000" height="1000" tabindex="0" style="border: 1px solid #d3d3d3;"></canvas>
 
 <script>
@@ -22,7 +24,7 @@
         $(document).ready($.getJSON("/api/Load", function (data) {
             $.each(data.player1.board.ships, function (index, item) {
                 context.fillStyle = 'grey'
-                context.fillRect(100 * index + 50, 600, 50, item.lenght * 50);
+                context.fillRect(item.x, item.y, 50, item.lenght * 50);
                 context.stroke();
             })}));
 
@@ -35,11 +37,55 @@
             $.each(data.player1.board.tiles, function (index, element) {
                 if (y > element.y && y < element.y + 50
                     && x > element.x && x < element.x + 50) {
-                    alert(element.id);
+
+                    $.each(data.player1.board.ships, function (index, skip) {
+                        if (skip.clicked == true) {
+                            skip.clicked = false;
+
+                            context.fillStyle = 'white'
+                            context.fillRect(skip.x, skip.y, 50, skip.lenght * 50);
+                            skip.x = element.x;
+                            skip.y = element.y;
+                            context.fillStyle = 'grey'
+                            context.fillRect(skip.x, skip.y, 50, skip.lenght * 50);
+                            context.stroke();
+                        }
+                    })
                 }
+
+
+            });
+
+            // Collision detection between clicked offset and element.
+            $.each(data.player1.board.ships, function (index, element) {
+                if (y > element.y && y < element.y + 50 * element.lenght
+                    && x > element.x && x < element.x + 50) {
+                    if (element.clicked == true) {
+                        element.clicked = false;
+                        context.fillStyle = 'grey'
+                        context.fillRect(element.x, element.y, 50, element.lenght * 50);
+                        context.stroke();
+                    }
+                    else {
+                        $.each(data.player1.board.ships, function (index,element)
+                        {
+                            element.clicked = false;
+                            context.fillStyle = 'grey'
+                            context.fillRect(element.x, element.y, 50, element.lenght * 50);
+                            context.stroke();
+
+                        })
+                        element.clicked = true;
+                        context.fillStyle = 'blue'
+                        context.fillRect(element.x, element.y, 50, element.lenght * 50);
+                        context.stroke();
+                    }
+                   
+                }
+
+
             });
         }, false);
-
-
     }));
 </script>
+
