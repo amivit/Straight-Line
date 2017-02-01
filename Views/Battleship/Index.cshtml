@@ -13,79 +13,85 @@
     elemTop = elem.offsetTop,
     context = elem.getContext('2d')
 
-    $(document).ready($.getJSON("/api/Load", function (data) {
-        $.each(data.player1.board.tiles, function (index, element) {
+    //Get Json
+    var myJson;
+    $(document).ready($.getJSON("/api/Load", function(data) {
+        myJson = data;
+        Draw();
+    }));
+
+    
+    function Draw() {
+        $.each(myJson.player1.board.ships, function (index, item) {
             context.fillStyle = 'grey'
-            context.rect(element.x, element.y, 50, 50);
+            context.fillRect(item.x, item.y, 50, item.lenght * 50);
             context.stroke();
         });
 
-        
-        $(document).ready($.getJSON("/api/Load", function (data) {
-            $.each(data.player1.board.ships, function (index, item) {
-                context.fillStyle = 'grey'
-                context.fillRect(item.x, item.y, 50, item.lenght * 50);
-                context.stroke();
-            })}));
+        $.each(myJson.player1.board.tiles, function (index, item) {
+            context.fillStyle = 'grey'
+            context.rect(item.x, item.y, 50, 50);
+            context.stroke();
+        });
+    }
+    
 
-        // Add event listener for `click` events.
-        elem.addEventListener('click', function (event) {
-            var x = event.pageX - elemLeft,
-                y = event.pageY - elemTop;
 
-            // Collision detection between clicked offset and element.
-            $.each(data.player1.board.tiles, function (index, element) {
-                if (y > element.y && y < element.y + 50
-                    && x > element.x && x < element.x + 50) {
+    // Klik event
+    elem.addEventListener('click', function (event) {
+        var x = event.pageX - elemLeft,
+            y = event.pageY - elemTop;
 
-                    $.each(data.player1.board.ships, function (index, skip) {
-                        if (skip.clicked == true) {
-                            skip.clicked = false;
+                         
+        // Detect klik på board
+        $.each(myJson.player1.board.tiles, function (index, element) {
+            if (y > element.y && y < element.y + 50
+                && x > element.x && x < element.x + 50) {
 
-                            context.fillStyle = 'white'
-                            context.fillRect(skip.x, skip.y, 50, skip.lenght * 50);
-                            skip.x = element.x;
-                            skip.y = element.y;
-                            context.fillStyle = 'grey'
-                            context.fillRect(skip.x, skip.y, 50, skip.lenght * 50);
-                            context.stroke();
-                        }
-                    })
+                $.each(myJson.player1.board.ships, function (index, skip) {
+                    if (skip.clicked == true) {
+                        skip.clicked = false;
+
+                        context.fillStyle = 'white'
+                        context.fillRect(skip.x, skip.y, 50, skip.lenght * 50);
+                        skip.x = element.x;
+                        skip.y = element.y;
+                        context.fillStyle = 'grey'
+                        context.fillRect(skip.x, skip.y, 50, skip.lenght * 50);
+                        context.stroke();
+                    }
+                })
+            }
+
+        });
+             
+        // Detect klik på skibe
+        $.each(myJson.player1.board.ships, function (index, element) {
+            if (y > element.y && y < element.y + 50 * element.lenght
+                && x > element.x && x < element.x + 50) {
+                if (element.clicked == true) {
+                    element.clicked = false;
+                    context.fillStyle = 'grey'
+                    context.fillRect(element.x, element.y, 50, element.lenght * 50);
+                    context.stroke();
                 }
-
-
-            });
-
-            // Collision detection between clicked offset and element.
-            $.each(data.player1.board.ships, function (index, element) {
-                if (y > element.y && y < element.y + 50 * element.lenght
-                    && x > element.x && x < element.x + 50) {
-                    if (element.clicked == true) {
+                else {
+                    $.each(myJson.player1.board.ships, function (index, element) {
                         element.clicked = false;
                         context.fillStyle = 'grey'
                         context.fillRect(element.x, element.y, 50, element.lenght * 50);
                         context.stroke();
-                    }
-                    else {
-                        $.each(data.player1.board.ships, function (index,element)
-                        {
-                            element.clicked = false;
-                            context.fillStyle = 'grey'
-                            context.fillRect(element.x, element.y, 50, element.lenght * 50);
-                            context.stroke();
 
-                        })
-                        element.clicked = true;
-                        context.fillStyle = 'blue'
-                        context.fillRect(element.x, element.y, 50, element.lenght * 50);
-                        context.stroke();
-                    }
-                   
+                    })
+                    element.clicked = true;
+                    context.fillStyle = 'blue'
+                    context.fillRect(element.x, element.y, 50, element.lenght * 50);
+                    context.stroke();
                 }
 
+            }
 
-            });
-        }, false);
-    }));
+        });
+
+    }, false);
 </script>
-
