@@ -57,20 +57,24 @@
         $.each(myJson.player1.board.tiles, function (index, element) {
             if (y > element.y && y < element.y + 50
                 && x > element.x && x < element.x + 50) {
-                //Hvis der er et skib valgt skal den placer det hvis der er plads
+                //Hvis der er et skib valgt skal den placer det hvis det er inden for brættet
                 $.each(myJson.player1.board.ships, function (ind, skib) {
                     if (skib.clicked == true) {
                         Clear();
                         if (myJson.player1.board.tiles[index].y + (skib.lenght - 1) * 50 > 500) {
                             alert("fejl");
                         } else {
-
-                            // Prøver på at få lagt de tiles som skibet ligger på ind i en liste som hedder placering
-                            // men det virker ikke når du looper igennem det fix plz.
-                            for (var i = 0; i <= skib.length; i++) {
-
-                            //skib.placement.push(element);
-                            skib.placement.push(myJson.player1.board.tiles[i]);
+                            //skibet får de felter ind som den bruger
+                            var temp = index;
+                            for (var i = 0; i < skib.lenght; i++) {
+                                if (i == 0) {
+                                    skib.placement.push(myJson.player1.board.tiles[temp]);
+                                }
+                                else {
+                                    skib.placement.push(myJson.player1.board.tiles[temp + 10]);
+                                    temp = temp + 10;
+                                }
+                           
                             }
                         
                             for (var j = 0; j < skib.placement.length; j++) {
@@ -78,7 +82,7 @@
                                 alert(skib.placement[j].id);
 
                             }
-                            alert(skib.placement.lenght);
+                            //alert(skib.placement.lenght);
                             skib.x = element.x;
                             skib.y = element.y;
 
