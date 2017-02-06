@@ -10,25 +10,23 @@
 <div id="app">
     <section class="row">
         <div class="small-6 columns">
-            <h1 class="text-center">YOU</h1>
+            <h1 class="text-center">You</h1>
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
-
                 </div>
             </div>
         </div>
         <div class="small-6 columns">
-            <h1 class="text-center">MONSTER</h1>
+            <h1 class="text-center">Dragon</h1>
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
-
                 </div>
             </div>
         </div>
     </section>
     <section class="row controls">
         <div class="small-12 columns">
-            <button id="start-game">START NEW GAME</button>
+            <button id="start-game">Start New Game</button>
         </div>
     </section>
     <section class="row controls">
@@ -43,7 +41,6 @@
         <div class="small-12 columns">
             <ul>
                 <li>
-
                 </li>
             </ul>
         </div>
@@ -61,7 +58,6 @@
     <a :href="myLink">Test link</a>
 </div>
 
-
 <script>
     new Vue({
         el: '#myapp',
@@ -73,17 +69,17 @@
             y: 0,
         },
         methods: {
-            changeMessage: function(event) {
+            changeMessage: function (event) {
                 this.message = event.target.value;
             },
-            sayHello: function() {
+            sayHello: function () {
                 this.message = 'Hello from a function!';
                 return this.message;
             },
-            increase: function(step, event) {
+            increase: function (step, event) {
                 this.counter += step;
             },
-            updateCoordinates: function(event) {
+            updateCoordinates: function (event) {
                 this.x = event.clientX;
                 this.y = event.clientY;
             }

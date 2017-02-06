@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace StraightLine.Controllers
 {
-    public class MonsterSlayerController : Controller
+    public class DragonSlayerController : Controller
     {
         public IActionResult Index()
         {
