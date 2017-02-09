@@ -65,6 +65,7 @@
                             alert("fejl");
                         } else {
                             //skibet får de felter ind som den bruger
+                            skib.placement = []; //fjerner tidligere ID'er
                             var temp = index;
                             for (var i = 0; i < skib.lenght; i++) {
                                 if (i == 0) {

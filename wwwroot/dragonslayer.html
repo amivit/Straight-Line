@@ -51,10 +51,9 @@
     <button @click="increase(2)">Click me</button>
     <p>{{ counter }}</p>
     <p @mousemove="updateCoordinates">Coordinates: {{ x }} / {{ y }}</p>
-    <input type="text" placeholder="Type somthing here..." @input="changeMessage" v-model="message">
+    <input type="text" placeholder="Type somthing here..." v-model="myLink">
 
     <p>{{ message  }}</p>
-
     <a :href="myLink">Test link</a>
 </div>
 
