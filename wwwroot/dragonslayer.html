@@ -1,0 +1,88 @@
+﻿<link rel="stylesheet" href="css/foundation.min.css">
+<link rel="stylesheet" href="css/app.css">
+
+<br>
+<br>
+<br>
+
+<h1>Vue.js Experimentation</h1>
+
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">You</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">Dragon</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls">
+        <div class="small-12 columns">
+            <button id="start-game">Start New Game</button>
+        </div>
+    </section>
+    <section class="row controls">
+        <div class="small-12 columns">
+            <button id="attack">ATTACK</button>
+            <button id="special-attack">SPECIAL ATTACK</button>
+            <button id="heal">HEAL</button>
+            <button id="give-up">GIVE UP</button>
+        </div>
+    </section>
+    <section class="row log">
+        <div class="small-12 columns">
+            <ul>
+                <li>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+<div id="myapp">
+    <button @click="increase(2)">Click me</button>
+    <p>{{ counter }}</p>
+    <p @mousemove="updateCoordinates">Coordinates: {{ x }} / {{ y }}</p>
+    <input type="text" placeholder="Type somthing here..." @input="changeMessage" v-model="message">
+
+    <p>{{ message  }}</p>
+
+    <a :href="myLink">Test link</a>
+</div>
+
+<script>
+    new Vue({
+        el: '#myapp',
+        data: {
+            message: '',
+            myLink: 'http://google.com',
+            counter: 0,
+            x: 0,
+            y: 0,
+        },
+        methods: {
+            changeMessage: function (event) {
+                this.message = event.target.value;
+            },
+            sayHello: function () {
+                this.message = 'Hello from a function!';
+                return this.message;
+            },
+            increase: function (step, event) {
+                this.counter += step;
+            },
+            updateCoordinates: function (event) {
+                this.x = event.clientX;
+                this.y = event.clientY;
+            }
+        }
+    })
+</script>

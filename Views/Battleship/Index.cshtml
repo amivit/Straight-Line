@@ -3,6 +3,8 @@
 }
 
 <h2>Battleship Index</h2>
+<input type="radio" name="number">Horizontal
+<input type="radio" name="number" checked="checked">Vertical
 <canvas id="myCanvas" width="1000" height="1000" tabindex="0" style="border: 1px solid #d3d3d3;"></canvas>
 
 <script>
@@ -11,35 +13,106 @@
     elemTop = elem.offsetTop,
     context = elem.getContext('2d')
 
+    //Get Json
+    var myJson;
     $(document).ready($.getJSON("/api/Load", function (data) {
-        $.each(data.player1.board.tiles, function (index, element) {
-            context.fillStyle = 'grey'
-            context.rect(element.x, element.y, 50, 50);
+        myJson = data;
+        DrawShip();
+        DrawTiles();
+
+    }));
+
+    function DrawShip() {
+        $.each(myJson.player1.board.ships, function (index, item) {
+
+            if (item.clicked == true) {
+                context.fillStyle = 'blue';
+            } else {
+                context.fillStyle = 'grey';
+            }
+            context.fillRect(item.x, item.y, 50, item.lenght * 50);
             context.stroke();
         });
 
-        
-        $(document).ready($.getJSON("/api/Load", function (data) {
-            $.each(data.player1.board.ships, function (index, item) {
-                context.fillStyle = 'grey'
-                context.fillRect(100 * index + 50, 600, 50, item.lenght * 50);
-                context.stroke();
-            })}));
+    }
 
-        // Add event listener for `click` events.
-        elem.addEventListener('click', function (event) {
-            var x = event.pageX - elemLeft,
-                y = event.pageY - elemTop;
+    function DrawTiles() {
+        $.each(myJson.player1.board.tiles, function (index, item) {
+            context.fillStyle = 'grey';
+            context.rect(item.x, item.y, 50, 50);
+            context.stroke();
+        });
+    }
 
-            // Collision detection between clicked offset and element.
-            $.each(data.player1.board.tiles, function (index, element) {
-                if (y > element.y && y < element.y + 50
-                    && x > element.x && x < element.x + 50) {
-                    alert(element.id);
+    function Clear(parameters) {
+        context.clearRect(0, 0, 1000, 1000);
+    }
+
+    // Klik event
+    elem.addEventListener('click', function (event) {
+        var x = event.pageX - elemLeft,
+            y = event.pageY - elemTop;
+
+        // Detect klik på board
+        $.each(myJson.player1.board.tiles, function (index, element) {
+            if (y > element.y && y < element.y + 50
+                && x > element.x && x < element.x + 50) {
+                //Hvis der er et skib valgt skal den placer det hvis det er inden for brættet
+                $.each(myJson.player1.board.ships, function (ind, skib) {
+                    if (skib.clicked == true) {
+                        Clear();
+                        if (myJson.player1.board.tiles[index].y + (skib.lenght - 1) * 50 > 500) {
+                            alert("fejl");
+                        } else {
+                            //skibet får de felter ind som den bruger
+                            var temp = index;
+                            for (var i = 0; i < skib.lenght; i++) {
+                                if (i == 0) {
+                                    skib.placement.push(myJson.player1.board.tiles[temp]);
+                                }
+                                else {
+                                    skib.placement.push(myJson.player1.board.tiles[temp + 10]);
+                                    temp = temp + 10;
+                                }
+                           
+                            }
+                        
+                            for (var j = 0; j < skib.placement.length; j++) {
+
+                                alert(skib.placement[j].id);
+
+                            }
+                            //alert(skib.placement.lenght);
+                            skib.x = element.x;
+                            skib.y = element.y;
+
+                        }
+                        DrawShip();
+                        DrawTiles();
+                    }
+                })
+            }
+        });
+
+        // Detect klik på skibe
+        $.each(myJson.player1.board.ships, function (index, element) {
+            if (y > element.y && y < element.y + 50 * element.lenght
+                && x > element.x && x < element.x + 50) {
+                //Kun select den der er blevet valgt
+                if (element.clicked == true) {
+                    element.clicked = false;
+                    DrawShip();
+                    DrawTiles();
                 }
-            });
-        }, false);
-
-
-    }));
+                else if (element.clicked == false) {
+                    $.each(myJson.player1.board.ships, function (index, elem) {
+                        elem.clicked = false;
+                    });
+                    element.clicked = true;
+                    DrawShip();
+                    DrawTiles();
+                }
+            }
+        });
+    }, false);
 </script>
