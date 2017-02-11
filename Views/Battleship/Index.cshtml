@@ -36,6 +36,40 @@
 
     }
 
+    function CheckOverlap(ActiveShip, index) {
+        var arr = [];
+        var godkendt = true;
+            //Finder ud af hvad for nogle tiles skibet vil blive lagt på  
+            for (var i = 0; i < ActiveShip.lenght; i++) {
+                if (i == 0) {
+                    arr.push(myJson.player1.board.tiles[index]);
+                }
+                else {
+                    arr.push(myJson.player1.board.tiles[index + 10]);
+                    index = index + 10;
+                }
+            }
+
+            $.each(myJson.player1.board.ships, function (index, item) {
+               
+                if (item.id != ActiveShip.id) {
+                    for (var j = 0; j < item.placement.length; j++) {
+
+                        for (var i = 0; i < arr.length; i++) {
+                            if (item.placement[j].id == arr[i].id) {
+                                godkendt = false;
+                            }
+                        }
+                    }           
+                }
+            });
+        return godkendt
+       
+
+    }
+
+
+
     function DrawTiles() {
         $.each(myJson.player1.board.tiles, function (index, item) {
             context.fillStyle = 'grey';
@@ -63,7 +97,12 @@
                         Clear();
                         if (myJson.player1.board.tiles[index].y + (skib.lenght - 1) * 50 > 500) {
                             alert("fejl");
-                        } else {
+                        }
+                        else if (!CheckOverlap(skib, index)) {
+                            alert("den var ikke ok");
+                        }
+                        else {
+                           // alert("Den var ikke ok");
                             //skibet får de felter ind som den bruger
                             skib.placement = []; //fjerner tidligere ID'er
                             var temp = index;
@@ -80,12 +119,13 @@
                         
                             for (var j = 0; j < skib.placement.length; j++) {
 
-                                alert(skib.placement[j].id);
+                               // alert(skib.placement[j].id);
 
                             }
                             //alert(skib.placement.lenght);
                             skib.x = element.x;
                             skib.y = element.y;
+
 
                         }
                         DrawShip();
