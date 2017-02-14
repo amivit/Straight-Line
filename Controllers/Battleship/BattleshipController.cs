@@ -42,5 +42,19 @@ namespace StraightLine.Controllers.Battleship
             var gamestate = new GameState();
             return Ok(gamestate);
         }
+
+        [Route("api/PlayerReady/{player}")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GameStart(Player player, bool ready)
+        {
+            var gamestate = new GameState();
+            player.Ready = true;
+            if (gamestate.Player1.Ready == true && gamestate.Player2.Ready == true)
+            {
+
+            }
+            return Ok(gamestate);
+        }
     }
 }

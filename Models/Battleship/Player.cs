@@ -13,5 +13,6 @@ namespace StraightLine.Models.Battleship
         }
 
         public Board Board { get; set; }
+        public bool Ready { get; set; }
     }
 }

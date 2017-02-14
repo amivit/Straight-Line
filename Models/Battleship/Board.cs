@@ -50,7 +50,7 @@ namespace StraightLine.Models.Battleship
             s.id = 0.ToString();
             s.placement = new List<Tile>();
             s.lenght = 3;
-            s.x = 50;
+            s.x = 60;
             s.y = 600;
             Ships.Add(s);
 
@@ -58,7 +58,7 @@ namespace StraightLine.Models.Battleship
             s.id = 1.ToString();
             s.placement = new List<Tile>();
             s.lenght = 2;
-            s.x = 150;
+            s.x = 120;
             s.y = 600;
             Ships.Add(s);
 
@@ -66,7 +66,7 @@ namespace StraightLine.Models.Battleship
             s.id = 2.ToString();
             s.placement = new List<Tile>();
             s.lenght = 1;
-            s.x = 250;
+            s.x = 180;
             s.y = 600;
             Ships.Add(s);
 

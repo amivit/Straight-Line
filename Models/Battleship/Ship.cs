@@ -10,6 +10,8 @@ namespace StraightLine.Models.Battleship
         public string id { get; set; }
         public List<Tile> placement { get; set; }
 
+        public string VerticalOrHorizontal { get; set; }
+
         public int lenght { get; set; }
 
         public bool clicked { get; set; }

@@ -3,8 +3,8 @@
 }
 
 <h2>Battleship Index</h2>
-<input type="radio" name="number">Horizontal
-<input type="radio" name="number" checked="checked">Vertical
+<input type="radio" name="number" onclick="ShipPosition()" id="Horizontal">Horizontal
+<input type="radio" name="number" onclick="ShipPosition()" id="Vertical" checked="checked">Vertical
 <canvas id="myCanvas" width="1000" height="1000" tabindex="0" style="border: 1px solid #d3d3d3;"></canvas>
 
 <script>
@@ -19,8 +19,33 @@
         myJson = data;
         DrawShip();
         DrawTiles();
-
     }));
+
+    function ShipPosition() {
+        var hx = 50;
+        var hy = 500;
+        var vx = 0;
+        var vy = 600;
+        $.each(myJson.player1.board.ships, function (index, item) {
+            if (item.placement[0] == null) {
+                if (document.getElementById('Horizontal').checked) {
+                    hy = hy + 60;
+                    item.x = hx;
+                    item.y = hy;
+
+                } else if (document.getElementById('Vertical').checked) {
+                    vx = vx + 60;
+                    item.x = vx;
+                    item.y = vy;
+                }
+            }
+            
+        })
+        Clear();
+        DrawShip();
+        DrawTiles();
+    }
+
 
     function DrawShip() {
         $.each(myJson.player1.board.ships, function (index, item) {
@@ -30,8 +55,25 @@
             } else {
                 context.fillStyle = 'grey';
             }
-            context.fillRect(item.x, item.y, 50, item.lenght * 50);
-            context.stroke();
+            if (item.VerticalOrHorizontal == "Horizontal") {
+                context.fillRect(item.x, item.y, item.lenght * 50, 50);
+                context.stroke();
+            }
+            else if (item.VerticalOrHorizontal == "Vertical") {
+                context.fillRect(item.x, item.y, 50, item.lenght * 50);
+                context.stroke();
+            }
+            else {
+                if (document.getElementById('Horizontal').checked) {
+                    context.fillRect(item.x, item.y, item.lenght * 50, 50);
+                    context.stroke();
+                } else if (document.getElementById('Vertical').checked) {
+                    context.fillRect(item.x, item.y, 50, item.lenght * 50);
+                    context.stroke();
+                }
+            }
+           
+
         });
 
     }
@@ -102,29 +144,45 @@
                             alert("den var ikke ok");
                         }
                         else {
-                           // alert("Den var ikke ok");
-                            //skibet får de felter ind som den bruger
-                            skib.placement = []; //fjerner tidligere ID'er
-                            var temp = index;
-                            for (var i = 0; i < skib.lenght; i++) {
-                                if (i == 0) {
-                                    skib.placement.push(myJson.player1.board.tiles[temp]);
-                                }
-                                else {
-                                    skib.placement.push(myJson.player1.board.tiles[temp + 10]);
-                                    temp = temp + 10;
-                                }
-                           
-                            }
-                        
-                            for (var j = 0; j < skib.placement.length; j++) {
+                            if (document.getElementById('Horizontal').checked) {
+                                //skibet får de felter ind som den bruger
+                                skib.placement = []; //fjerner tidligere ID'er
+                                var temp = index;
+                                for (var i = 0; i < skib.lenght; i++) {
+                                    if (i == 0) {
+                                        skib.placement.push(myJson.player1.board.tiles[temp]);
+                                    }
+                                    else {
+                                        skib.placement.push(myJson.player1.board.tiles[temp + 1]);
+                                        temp = temp + 1;
+                                    }
 
-                               // alert(skib.placement[j].id);
+                                }
 
+                                skib.VerticalOrHorizontal = "Horizontal";
+                                skib.x = element.x;
+                                skib.y = element.y;
                             }
-                            //alert(skib.placement.lenght);
-                            skib.x = element.x;
-                            skib.y = element.y;
+                            else if (document.getElementById('Vertical').checked) {
+                                //skibet får de felter ind som den bruger
+                                skib.placement = []; //fjerner tidligere ID'er
+                                var temp = index;
+                                for (var i = 0; i < skib.lenght; i++) {
+                                    if (i == 0) {
+                                        skib.placement.push(myJson.player1.board.tiles[temp]);
+                                    }
+                                    else {
+                                        skib.placement.push(myJson.player1.board.tiles[temp + 10]);
+                                        temp = temp + 10;
+                                    }
+
+                                }
+                                skib.VerticalOrHorizontal = "Vertical";
+                                skib.x = element.x;
+                                skib.y = element.y;
+                            }
+                       
+
 
 
                         }
@@ -137,8 +195,18 @@
 
         // Detect klik på skibe
         $.each(myJson.player1.board.ships, function (index, element) {
-            if (y > element.y && y < element.y + 50 * element.lenght
-                && x > element.x && x < element.x + 50) {
+            var vertical;
+            var horizontal;
+            if (element.VerticalOrHorizontal == "Vertical" || document.getElementById('Vertical').checked) {
+                vertical = element.lenght;
+                horizontal = 1;
+            }
+            else if (element.VerticalOrHorizontal == "Horizontal" || document.getElementById('Horizontal').checked) {
+                vertical = 1;
+                horizontal = element.lenght;
+            }
+            if (y > element.y && y < element.y + 50 * vertical 
+                && x > element.x && x < element.x + 50 * horizontal) {
                 //Kun select den der er blevet valgt
                 if (element.clicked == true) {
                     element.clicked = false;
