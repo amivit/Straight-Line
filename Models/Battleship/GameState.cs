@@ -7,11 +7,7 @@ namespace StraightLine.Models.Battleship
 {
     public class GameState
     {
-        public GameState()
-        {
-            this.Player1 = new Player();
-            this.Player2 = new Player();
-        }
+        public Guid GameGuid = Guid.NewGuid();
 
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }

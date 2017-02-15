@@ -50,7 +50,8 @@
       "type": "build"
     },
     "Newtonsoft.Json": "9.0.1",
-    "jQuery": "3.1.1"
+    "jQuery": "3.1.1",
+    "Microsoft.AspNetCore.Session": "1.0.0"
   },
 
   "tools": {
