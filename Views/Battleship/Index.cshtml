@@ -82,15 +82,29 @@
         var arr = [];
         var godkendt = true;
         //Finder ud af hvad for nogle tiles skibet vil blive lagt på
-        for (var i = 0; i < ActiveShip.lenght; i++) {
-            if (i == 0) {
-                arr.push(myJson.board.tiles[index]);
-            }
-            else {
-                arr.push(myJson.board.tiles[index + 10]);
-                index = index + 10;
+        if (document.getElementById('Vertical').checked) {
+            for (var i = 0; i < ActiveShip.lenght; i++) {
+                if (i == 0) {
+                    arr.push(myJson.board.tiles[index]);
+                }
+                else {
+                    arr.push(myJson.board.tiles[index + 10]);
+                    index = index + 10;
+                }
             }
         }
+        else if (document.getElementById('Horizontal').checked) {
+            for (var i = 0; i < ActiveShip.lenght; i++) {
+                if (i == 0) {
+                    arr.push(myJson.board.tiles[index]);
+                }
+                else {
+                    arr.push(myJson.board.tiles[index + 1]);
+                    index = index + 1;
+                }
+            }
+        }
+       
 
         $.each(myJson.board.ships, function (index, item) {
 
@@ -134,7 +148,7 @@
                 $.each(myJson.board.ships, function (ind, skib) {
                     if (skib.clicked == true) {
                         Clear();
-                        if (myJson.board.tiles[index].y + (skib.lenght - 1) * 50 > 500) {
+                        if (myJson.board.tiles[index].y + (skib.lenght - 1) * 50 > 500 || myJson.board.tiles[index].x + (skib.lenght - 1) * 50 > 500 ) {
                             alert("fejl");
                         }
                         else if (!CheckOverlap(skib, index)) {
