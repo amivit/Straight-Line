@@ -38,7 +38,7 @@ namespace StraightLine.Controllers.Battleship
             return Ok();
         }
 
-        [Route("api/Load/")]
+        [Route("api/Load")]
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Load()
@@ -53,16 +53,19 @@ namespace StraightLine.Controllers.Battleship
                 { _activeGameState = gameState; }
             }
 
-            if (_gameStateStack.Count != 0 && _gameStateStack.Peek().Player2 == null)
+            if (_gameStateStack.Count != 0 && _gameStateStack.Peek().Player2 == null && _gameStateStack.Peek().Player1.PlayerGuid.ToString() != HttpContext.Session.GetString("PlayerGUID"))
             {
                 _activeGameState = _gameStateStack.Peek();
                 _activeGameState.Player2 = new Player();
+                _activeGameState.Player2.GameGuid = _activeGameState.GameGuid;
                 HttpContext.Session.SetString("PlayerGUID", _activeGameState.Player2.PlayerGuid.ToString());
             }
             else if (_activeGameState == null) // No existing game waiting on 2nd player
             {
                 _activeGameState = new GameState();
                 _activeGameState.Player1 = new Player();
+                _activeGameState.Player1.GameGuid = _activeGameState.GameGuid;
+
                 _gameStateStack.Push(_activeGameState);
                 HttpContext.Session.SetString("PlayerGUID", _activeGameState.Player1.PlayerGuid.ToString());
             }
@@ -73,7 +76,7 @@ namespace StraightLine.Controllers.Battleship
             {
                 return Ok(_activeGameState.Player1);
             }
-            if (HttpContext.Session.GetString("PlayerGUID") == _activeGameState.Player2.PlayerGuid.ToString())
+            else if (HttpContext.Session.GetString("PlayerGUID") == _activeGameState.Player2.PlayerGuid.ToString())
             {
                 return Ok(_activeGameState.Player2);
             }
@@ -91,6 +94,15 @@ namespace StraightLine.Controllers.Battleship
             {
             }
             return Ok(gamestate);
+        }
+
+        [Route("api/Reset")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Reset()
+        {
+            HttpContext.Session.Clear();
+            return Ok();
         }
     }
 }
