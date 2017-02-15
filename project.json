@@ -45,7 +45,8 @@
       "type": "build"
     },
     "Microsoft.AspNetCore.SpaServices": "1.1.0",
-    "Microsoft.AspNetCore.NodeServices": "1.1.0"
+    "Microsoft.AspNetCore.NodeServices": "1.1.0",
+    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.1.1"
   },
 
   "tools": {
@@ -88,7 +89,6 @@
 
   "scripts": {
     "precompile": [ "dotnet bundle" ],
-    "prepublish": [ "" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   },
 

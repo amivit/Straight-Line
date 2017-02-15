@@ -19,7 +19,8 @@
         myJson = data;
         DrawShip();
         DrawTiles();
-        alert(myJson);
+        console.log(myJson);
+        alert("GameGuid: " + myJson.gameGuid + "\nPlayerGuid: " + myJson.playerGuid);
     }));
 
     function ShipPosition() {
