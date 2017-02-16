@@ -6,7 +6,7 @@
 <input type="radio" name="number" onclick="ShipPosition()" id="Horizontal">Horizontal
 <input type="radio" name="number" onclick="ShipPosition()" id="Vertical" checked="checked">Vertical
 <canvas id="myCanvas" width="1000" height="1000" tabindex="0" style="border: 1px solid #d3d3d3;"></canvas>
-
+<input id="ReadyButton" type="button" value ="Ready" onclick="PlayerIsReady()" />
 <script>
     var elem = document.getElementById('myCanvas'),
     elemLeft = elem.offsetLeft,
@@ -22,7 +22,17 @@
         console.log(myJson);
         alert("GameGuid: " + myJson.gameGuid + "\nPlayerGuid: " + myJson.playerGuid);
     }));
+    function PlayerIsReady() {
+        $.ajax({
+            data: myJson.playerGuid,
+            url: '/api/GameStart/' + myJson.playerGuid,
+            type: 'POST',
+            success: function (data) {
+                alert("success");
 
+            }
+        });
+    }
     function ShipPosition() {
         var hx = 50;
         var hy = 500;
@@ -148,11 +158,14 @@
                 $.each(myJson.board.ships, function (ind, skib) {
                     if (skib.clicked == true) {
                         Clear();
-                        if (myJson.board.tiles[index].y + (skib.lenght - 1) * 50 > 500 || myJson.board.tiles[index].x + (skib.lenght - 1) * 50 > 500 ) {
-                            alert("fejl");
+                        if (myJson.board.tiles[index].y + (skib.lenght - 1) * 50 > 500 && document.getElementById('Vertical').checked) {
+                            alert("Ship cannot go out of the map");
+                        }
+                        else if (myJson.board.tiles[index].x + (skib.lenght - 1) * 50 > 500 && document.getElementById('Horizontal').checked) {
+                            alert("Ship cannot go out of the map");
                         }
                         else if (!CheckOverlap(skib, index)) {
-                            alert("den var ikke ok");
+                            alert("You cannot overlap ships");
                         }
                         else {
                             if (document.getElementById('Horizontal').checked) {

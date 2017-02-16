@@ -83,17 +83,26 @@ namespace StraightLine.Controllers.Battleship
             return BadRequest();
         }
 
-        [Route("api/PlayerReady/{player}")]
-        [HttpGet]
+        [Route("api/GameStart/{PlayerGuid}")]
+        [HttpPost]
         [AllowAnonymous]
-        public IActionResult GameStart(Player player, bool ready)
+        public IActionResult GameStart(string PlayerGuid)
         {
-            var gamestate = new GameState();
-            player.Ready = true;
-            if (gamestate.Player1.Ready == true && gamestate.Player2.Ready == true)
+            if (PlayerGuid == _activeGameState.Player1.PlayerGuid.ToString())
             {
+                _activeGameState.Player1.Ready = true;
             }
-            return Ok(gamestate);
+            else if (PlayerGuid == _activeGameState.Player2.PlayerGuid.ToString())
+            {
+                _activeGameState.Player2.Ready = true;
+            }
+
+            //if (_activeGameState.Player1.Ready == true && _activeGameState.Player2.Ready == true)
+            //{
+
+            //}
+
+                return Ok(_activeGameState);
         }
 
         [Route("api/Reset")]
