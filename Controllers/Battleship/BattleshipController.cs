@@ -20,6 +20,12 @@ namespace StraightLine.Controllers.Battleship
             return View();
         }
 
+        public IActionResult StartedGame(string PlayerGuid)
+        {
+
+            return View();
+        }
+
         [Route("api/Bomb/{position}")]
         [HttpPost]
         [AllowAnonymous]
@@ -83,6 +89,24 @@ namespace StraightLine.Controllers.Battleship
             return BadRequest();
         }
 
+        [Route("api/GetJsonForPlayer")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GetJsonForPlayer(string PlayerGuid)
+        {
+
+            if (PlayerGuid == _activeGameState.Player1.PlayerGuid.ToString())
+            {
+                return Ok(_activeGameState.Player1);
+            }
+            else if (PlayerGuid == _activeGameState.Player2.PlayerGuid.ToString())
+            {
+                return Ok(_activeGameState.Player2);
+            }
+         
+            return BadRequest();
+        }
+
         [Route("api/GameStart/{PlayerGuid}")]
         [HttpPost]
         [AllowAnonymous]
@@ -97,10 +121,15 @@ namespace StraightLine.Controllers.Battleship
                 _activeGameState.Player2.Ready = true;
             }
 
-            //if (_activeGameState.Player1.Ready == true && _activeGameState.Player2.Ready == true)
-            //{
-
-            //}
+            if (_activeGameState.Player2 == null)
+            {
+                return Ok(_activeGameState);
+            }
+            else if (_activeGameState.Player1.Ready == true && _activeGameState.Player2.Ready == true)
+            {
+                _activeGameState.BothPlayersReady = true;
+                return Ok(_activeGameState.BothPlayersReady);
+            }
 
                 return Ok(_activeGameState);
         }

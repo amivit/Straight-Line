@@ -6,7 +6,7 @@
 <input type="radio" name="number" onclick="ShipPosition()" id="Horizontal">Horizontal
 <input type="radio" name="number" onclick="ShipPosition()" id="Vertical" checked="checked">Vertical
 <canvas id="myCanvas" width="1000" height="1000" tabindex="0" style="border: 1px solid #d3d3d3;"></canvas>
-<input id="ReadyButton" type="button" value ="Ready" onclick="PlayerIsReady()" />
+<input id="ReadyButton" type="button" value ="Ready" onclick="setInterval(PlayerIsReady, 1000)" />
 <script>
     var elem = document.getElementById('myCanvas'),
     elemLeft = elem.offsetLeft,
@@ -28,11 +28,17 @@
             url: '/api/GameStart/' + myJson.playerGuid,
             type: 'POST',
             success: function (data) {
-                alert("success");
+                if (data == true) {
+                    var url = "/Battleship/StartedGame";
+                    window.location.href = url;
+                }
 
+           
             }
         });
     }
+
+
     function ShipPosition() {
         var hx = 50;
         var hy = 500;

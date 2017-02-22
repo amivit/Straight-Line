@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<html>
+<head>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <h1>HELLO</h1>
+
+    <script>
+
+        function init() {
+
+
+            var myJson;
+            $(document).ready($.getJSON("/api/GetJsonForPlayer", function (data) {
+                myJson = data;
+                console.log(myJson);
+                alert("GameGuid: " + myJson.gameGuid + "\nPlayerGuid: " + myJson.playerGuid);
+                alert(myJson.board);
+            }));
+
+
+            stage = new createjs.Stage("demoCanvas");
+
+            //$.each(myJson.board.tiles, function (index, item) {
+
+            //    tile = new createjs.Shape();
+            //    tile.graphics.beginFill(getRandomColor()).drawRect(0, 0, 50);
+            //    tile.x = item.x
+            //    tile.y = item.y
+            //    stage.addChild(tile);
+            //    tile.addEventListener("mousedown", handlePress(tile));
+            //    stage.update();
+            //})
+
+
+
+            //createjs.Ticker.addEventListener("tick", handleTick);
+
+            //function handleTick() {
+            //    var speed = 0;
+            //    for (var i = 0; i < circles.length; i++) {
+            //        circles[i].x += speed + 5;
+            //        // speed = speed + 0.50;
+            //        if (circles[i].x > stage.canvas.width) {
+            //            circles[i].x = 0;
+            //            //alert("Du tabte");
+            //        }
+            //        stage.update();
+            //    }
+            //}
+
+            function handlePress(i) {
+                return function () {
+                    //i.y = i.y + 20;
+                    //stage.removeChild(i);
+                    // Reset();
+                    //i.alpha = 0.5;
+                    // stage.update();
+                    //  Highscore = Highscore + 1;
+                    // document.getElementById("p1").innerHTML = Highscore;
+                    //i.scaleX = i.scaleX + 1;
+                    //i.scaleY = i.scaleY + 1;
+                    alert(i.id);
+                };
+            }
+        }
+    </script>
+</head>
+<body onload="init();">
+    <canvas id="demoCanvas" width="1900" height="900"></canvas>
+</body>
+</html>
