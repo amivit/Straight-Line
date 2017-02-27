@@ -27,5 +27,25 @@ namespace StraightLine.Controllers
             Process.Start(psi);
             return Ok();
         }
+
+        public static List<object> ObjectList { get; set; }
+
+        // GET api/values
+        [HttpGet]
+        public ActionResult Get()
+        {
+            return Ok(ObjectList);
+        }
+
+        // POST api/values
+        [HttpPost]
+        public ActionResult Post([FromBody] List<object> item)
+        {
+            // ObjectList = (List<object>)JsonConvert.DeserializeObject(value);
+            ObjectList = item;
+            return Ok(ObjectList);
+
+            // ObjectList = (List<object>)JsonConvert.DeserializeObject(value);
+        }
     }
 }
