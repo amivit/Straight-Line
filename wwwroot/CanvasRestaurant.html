@@ -1,0 +1,177 @@
+﻿<html>
+<head>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script>
+        var stage;
+        var Liste = [];
+        var bord = new createjs.Bitmap("Pictures/tableSingle.png");
+        var bordliste = [];
+
+        function init() {
+
+            //var Highscore = 0;
+
+            // window.setInterval(AddCircle, 1000);
+            stage = new createjs.Stage("demoCanvas");
+            stage.enableMouseOver(10);
+
+            //var circle;
+            var x = 100;
+            var y = 100;
+
+            for (var j = 0; j < 5; j++) {
+
+                for (var i = 0; i < 5; i++) {
+                    //circle = new createjs.Shape();
+                    //circle.graphics.beginFill(getRandomColor()).drawCircle(0, 0, 30);
+                    //circle.x = x;
+                    //circle.y = y + 80;
+                    //y = circle.y;
+                    //stage.addChild(circle);
+                    //Liste.push(circle);
+                    //circle.addEventListener("mousedown", handlePress(circle));
+                    //stage.update();
+
+                    bord = new createjs.Bitmap("Pictures/tableSingle.png");
+
+                    bord.x = x;
+                    bord.y = y + 100;
+                    y = bord.y;
+                    bord.scaleX = 0.25;
+                    bord.scaleY = 0.25;
+                    Liste.push(bord);
+                    stage.addChild(bord);
+                    bord.addEventListener("mousedown", handlePress(bord));
+                    stage.update();
+
+                    var bordet = { bordx: x, bordy: y, alpha: 1 }
+                    bordliste.push(bordet);
+                    post();
+                }
+                x = x + 150;
+                y = 100;
+            }
+            setInterval(GetState, 1000);
+
+            function draw() {
+                var alphanumber;
+                for (var i = 0; i <= Liste.length; i++) {
+                    stage.removeChild(Liste[i]);
+                }
+                stage.update();
+
+                //Liste = bordliste;
+                for (var j = 0; j <= Liste.length; j++) {
+
+                   // alert(bordliste.length);
+                  //  Liste[j].alpha = bordliste[j].alpha;
+                    stage.addChild(Liste[j]);
+                }
+                stage.update();
+            }
+
+            function GetState() {
+                $.getJSON("/Api/Get", function (data) {
+                    Liste = data;
+                    draw();
+                    //console.log(data);
+
+                });
+            }
+
+            //createjs.Ticker.addEventListener("tick", handleTick);
+
+            //function handleTick() {
+            //    var speed = 0;
+            //    for (var i = 0; i < Liste.length; i++) {
+            //        Liste[i].x += speed + 5;
+            //        // speed = speed + 0.50;
+            //        if (Liste[i].x > stage.canvas.width) {
+            //            Liste[i].x = 0;
+            //            //alert("Du tabte");
+            //        }
+            //        stage.update();
+            //    }
+            //}
+
+            function handlePress(i) {
+                return function () {
+
+                    //i.y = i.y + 20;
+                    //stage.removeChild(i);
+                    Reset();
+                    i.alpha = 0.5;
+                    bordliste[i.id].alpha = 0.5;
+                    stage.update();
+                    //Highscore = Highscore + 1;
+                    //document.getElementById("p1").innerHTML = Highscore;
+                    //i.scaleX = i.scaleX + 1;
+                    //i.scaleY = i.scaleY + 1;
+                    post();
+                };
+            }
+
+            function post() {
+                $.ajax({
+                    //headers: {
+                    //    'Accept': 'application/json',
+                    //    'Content-Type': 'application/json'
+                    //},
+                    data: JSON.stringify(Liste),
+                    url: '/Api/Post',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+
+                    success: function (data) {
+                        alert(data);
+
+                    }
+
+                });
+
+            }
+            //function getRandomColor() {
+            //    var letters = '0123456789ABCDEF';
+            //    var color = '#';
+            //    for (var i = 0; i < 6; i++) {
+            //        color += letters[Math.floor(Math.random() * 16)];
+            //    }
+            //    return color;
+            //}
+            //function AddCircle() {
+            //    circle = new createjs.Shape();
+            //    circle.graphics.beginFill(getRandomColor()).drawCircle(0, 0, 30);
+            //    circle.x = 0
+            //    circle.y = Math.floor(Math.random() * 900)
+            //    stage.addChild(circle);
+            //    Liste.push(circle);
+            //    circle.addEventListener("mousedown", handlePress(circle));
+            //    stage.update();
+            //}
+
+            function Reset() {
+                for (var i = 0; i < Liste.length; i++) {
+                    Liste[i].alpha = 1;
+                }
+                for (var i = 0; i < bordliste.length; i++) {
+                    bordliste[i].alpha = 1;
+                }
+                bord.alpha = 1;
+                post();
+
+            }
+
+        }
+    </script>
+</head>
+<body onload="init();">
+    <canvas id="demoCanvas" width="1900" height="900"></canvas>
+    <input id="Button1" type="button" onclick="draw()" value="button" />
+    <!--<div class="test">
+        <p id="p1">Hello World!</p>
+    </div>-->
+</body>
+</html>
