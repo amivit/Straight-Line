@@ -22,11 +22,11 @@ artifacts:
   - path: bin\publish 
 deploy:
 - provider: S3
-  access_key_id: AKIAILYVH5BOGV3E6HVQ
+  access_key_id: AKIAJA7UKUKTUNTSVEBQ
   secret_access_key:
-    secure: UJSO1WCJWmaeCFcMAyz8mbicEpHQq2/hrFM0tNVnfb4zNwVCpgYwaOjDbYlqUzQF
+    secure: +Qu2k86q/hvc+29u4P0YlW9tuWOHmH5+VyCr1cUnQSr7cG2Ub4+YG9IbgrKenhgC
   region: eu-west-1
-  bucket: new-bucket-25290414
+  bucket: new-bucket-25290415
   folder: release
   set_public: true
   encrypt: true
